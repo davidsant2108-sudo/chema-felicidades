@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una sorpresa embrujada 🎃</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: #100b18;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* LOBBY */
+
+.lobby {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle, #492052, transparent 65%),
+    linear-gradient(135deg, #100b18, #24102d);
+  z-index: 10;
+  transition: opacity 1s, visibility 1s;
+}
+
+.lobby.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.lobby-content {
+  max-width: 500px;
+  animation: floating 3s infinite ease-in-out;
+}
+
+.pumpkin {
+  font-size: 100px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px #ff7900);
+  animation: bounce 2s infinite;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: #ff9d35;
+  text-shadow: 0 0 20px #b34b00;
+  margin-bottom: 20px;
+}
+
+.lobby p {
+  color: #ead8f2;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.open-button {
+  display: inline-block;
+  border: 2px solid #ffc15c;
+  border-radius: 50px;
+  padding: 16px 30px;
+  background: linear-gradient(135deg, #ff7900, #a12a91);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 25px #ff790066;
+  transition: .3s;
+}
+
+.open-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px #ff7900;
+}
+
+/* PÁGINA PRINCIPAL */
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 15px 60px;
+  position: relative;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: 1.2s;
+  background:
+    radial-gradient(circle at 10% 10%, #54214e, transparent 35%),
+    radial-gradient(circle at 90% 90%, #542900, transparent 35%),
+    linear-gradient(135deg, #100b18, #211128);
+}
+
+.main.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  padding: 40px 25px;
+  text-align: center;
+  border: 2px solid #b97532;
+  border-radius: 25px;
+  background: rgba(24, 13, 31, .88);
+  box-shadow: 0 0 35px #ff790033;
+  z-index: 2;
+}
+
+.decoration {
+  font-size: 27px;
+  letter-spacing: 8px;
+  margin-bottom: 25px;
+}
+
+.card .emoji {
+  font-size: 65px;
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, #ff9d35, #ffdf8a, #d8a6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card h3 {
+  color: #ffbd70;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 25px;
+}
+
+.message {
+  color: #f1e5f5;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.complent-frame {
+  display: block;
+  width: 100%;
+  height: 1200px;
+  border: 1px solid #754b7d;
+  border-radius: 15px;
+  margin: 25px 0;
+  background: #180f20;
+}
+
+.signature {
+  margin-top: 25px;
+  color: #ffbd70;
+  font-size: 1.1rem;
+}
+
+/* ELEMENTOS FLOTANTES */
+
+.spirit {
+  position: fixed;
+  bottom: -80px;
+  font-size: 35px;
+  opacity: .8;
+  z-index: 1;
+  pointer-events: none;
+  animation: rise linear infinite;
+}
+
+.s1 { left: 7%; animation-duration: 12s; }
+.s2 { left: 28%; animation-duration: 15s; animation-delay: 3s; }
+.s3 { left: 68%; animation-duration: 13s; animation-delay: 1s; }
+.s4 { left: 88%; animation-duration: 16s; animation-delay: 4s; }
+
+.petal {
+  position: fixed;
+  top: -30px;
+  z-index: 3;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+.confetti {
+  position: fixed;
+  top: -30px;
+  z-index: 20;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+/* ANIMACIONES */
+
+@keyframes floating {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bounce {
+  50% { transform: translateY(-12px) rotate(4deg); }
+}
+
+@keyframes rise {
+  to { transform: translateY(-120vh) rotate(25deg); }
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(500deg); }
+}
+
+@media (max-width: 500px) {
+  .card { padding: 30px 17px; }
+  .complent-frame { height: 1000px; }
+  .pumpkin { font-size: 75px; }
+  .decoration { letter-spacing: 3px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOBBY -->
+
+<section class="lobby" id="lobby">
+  <div class="lobby-content">
+    <div class="pumpkin">🎃</div>
+
+    <h1>¡Una sorpresa embrujada!</h1>
+
+    <p>
+      Entre calabazas, flores de cempasúchil
+      y misterios de la noche...
+      he preparado algo especial para ti. 🕯️
+    </p>
+
+    <button class="open-button" onclick="openSurprise()">
+      <a href="SNE_SOLICITUD_DE_EMPLEO_PLANTILLA_PDF_copia.pdf" download="SNE_SOLICITUD_DE_EMPLEO_PLANTILLA_PDF_copia">
+        🦇 Abrir sorpresa
+      </a>
+    </button>
+  </div>
+</section>
+
+<!-- CONTENIDO PRINCIPAL -->
+
+<main class="main" id="main">
+
+  <div class="spirit s1">🦇</div>
+  <div class="spirit s2">👻</div>
+  <div class="spirit s3">🦇</div>
+  <div class="spirit s4">🕯️</div>
+
+  <div class="card">
+
+    <div class="decoration">🌼 🕯️ 🌼 🕯️ 🌼</div>
+
+    <div class="emoji">🎃💀🎉</div>
+
+    <h2>¡Feliz cumpleaños!</h2>
+
+    <h3 id="nombre">Chema</h3>
+
+    <p class="message" id="mensaje"></p>
+
+    <iframe
+      class="complent-frame"
+      src="sat.html"
+      title="Sorpresa especial"
+      loading="lazy">
+    </iframe>
+
+    <p class="signature">
+      Con mucho cariño 💜
+      <br><br>
+      🌼 Que nunca falten la alegría y la magia 🌼
+    </p>
+
+    <div class="decoration" style="margin-top:25px">
+      🎃 🦇 👻 🦇 🎃
+    </div>
+
+  </div>
+</main>
+
+<script>
+const nombre = "Chema";
+
+const mensaje = `¡Disfruta mucho tu día! 🎃🌼💜
+`;
+
+document.getElementById("nombre").textContent = nombre;
+document.getElementById("mensaje").textContent = mensaje;
+
+function openSurprise() {
+  document.getElementById("lobby").classList.add("hidden");
+
+  setTimeout(() => {
+    document.getElementById("main").classList.add("show");
+    createConfetti();
+  }, 500);
+}
+
+function createConfetti() {
+  const symbols = ["🌼", "✨", "🎃", "🦇", "👻", "🕯️"];
+
+  for (let i = 0; i < 70; i++) {
+    const item = document.createElement("div");
+
+    item.className = "confetti";
+    item.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.fontSize = (15 + Math.random() * 18) + "px";
+    item.style.animationDuration = (3 + Math.random() * 4) + "s";
+    item.style.animationDelay = Math.random() * 2 + "s";
+
+    document.body.appendChild(item);
+
+    setTimeout(() => item.remove(), 9000);
+  }
+}
+</script>
+
+</body>
+</html>
